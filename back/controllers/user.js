@@ -30,13 +30,16 @@ const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, `${process.env.CRYPTOJ
     })
     .catch(error => res.status(500).json({error}));
 };
-
+// login pour s'identifier
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+//chercher l'e-mail de l'utilisateur
+    const emailCryptoJs = cryptojs.HmacSHA256(req.body.email, `${process.env.CRYPTOJS_EMAIL}`).toString();
+    User.findOne({ email: emailCryptoJs })
         .then(user => {
             if (!user) {
                 return res.status(401).json({message:'Paire login/mot de passe incorrecte'});
             }
+// controler la validité du password
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if(!valid) {
