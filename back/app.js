@@ -6,7 +6,10 @@ const helmet = require("helmet");
 const saucesRoutes =require('./routes/sauce')
 const userRoutes = require('./routes/user')
 
-mongoose.connect('mongodb+srv://Username:1234azerty@cluster0.sbvwpw0.mongodb.net/?retryWrites=true&w=majority',
+//importation de dotenv pour masquer la clef secrete
+require('dotenv').config();
+
+mongoose.connect(`${process.env.LOGINDB}`,
     { useNewUrlParser: true,
         useUnifiedTopology: true})
     .then(() => console.log('connexion mongodb OK !'))
@@ -21,13 +24,17 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
-
+app.use(
+    helmet({
+        crossOriginResourcePolicy: false,
+    })
+  );
 
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/images', express.static(path.join(__dirname,'images')));
 
-app.use(helmet());
+
 
 
 module.exports = app;

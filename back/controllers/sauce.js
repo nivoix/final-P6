@@ -74,21 +74,25 @@ exports.likeSauce = (req, res, next) => {
   Sauce.findOne({_id: req.params.id})
       .then(sauce => {
         if(req.body.like === 1) {
-          if( !sauce.usersLiked.includes( req.body.userId )) {
+          if( !sauce.usersLiked.includes( req.body.userId ) && !sauce.usersDisliked.includes( req.body.userId )) {
             sauce.likes++
             sauce.usersLiked.push(req.body.userId)
             sauce.save()
               .then(() => res.status(200).json({ message:'like ajouté !'}))
               .catch(error => res.status(400).json({ error }));
+          }else{
+            return res.status(400).json({message: `Vous n'etes pas autorisé`})
           }
         }
         else if (req.body.like === -1){
-          if ( !sauce.usersDisliked.includes( req.body.userId)) {
+          if ( !sauce.usersDisliked.includes( req.body.userId ) && !sauce.usersLiked.includes( req.body.userId )) {
             sauce.dislikes++
             sauce.usersDisliked.push( req.body.userId)
             sauce.save()
               .then(() => res.status(200).json({ message:'dislike ajouté !'}))
               .catch(error => res.status(400).json({ error }));
+          }else{
+            return res.status(400).json({message: `Vous n'etes pas autorisé`})
           }
         }
         else {
