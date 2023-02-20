@@ -1,5 +1,5 @@
 const validator = require('validator');
-
+//exportation du module de controle de l'email
 module.exports = (req, res, next) => {
     const{email} = req.body;
 

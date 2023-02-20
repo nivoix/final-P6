@@ -1,4 +1,6 @@
+//importation du package HTTP de Node.js
 const http = require('http');
+//importation de application app.js
 const app = require('./app');
 
 const normalizePort = val => {
@@ -12,6 +14,7 @@ const normalizePort = val => {
   }
   return false;
 };
+//paramètrage du port avec la methode set de express
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
@@ -34,7 +37,7 @@ const errorHandler = error => {
       throw error;
   }
 };
-
+// création du serveur
 const server = http.createServer(app);
 
 server.on('error', errorHandler);
@@ -43,5 +46,5 @@ server.on('listening', () => {
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
   console.log('Listening on ' + bind);
 });
-
+//le serveur écoute les requètes sur le port
 server.listen(port);

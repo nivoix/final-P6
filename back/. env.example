@@ -1,0 +1,3 @@
+TOKEN_KEY = xxxxxxx
+CRYPTOJS_EMAIL = xxxxxxxx
+LOGINDB = mongodb+srv://<'nom d'utilisateur mongoDB'>:<'mot de passe mongoDB'>@cluster0.sbvwpw0.mongodb.net/?retryWrites=true&w=majority

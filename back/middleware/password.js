@@ -1,9 +1,7 @@
 //importation du password validator
 const passwordvalidator = require('password-validator');
-
 // création du schéma
 const passwordSchema = new passwordvalidator();
-
 //le schéma du mot de passe
 passwordSchema
 .is().min(5)                                    // Minimum length 5
@@ -13,8 +11,7 @@ passwordSchema
 .has().digits(2)                                // Must have at least 2 digits
 .has().not().spaces()                           // Should not have spaces
 .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
-
-//
+//exportation du module de controle du mot de passe
 module.exports = (req, res, next) => {
     if(passwordSchema.validate(req.body.password)){
     next()

@@ -5,12 +5,10 @@ const password = require('../middleware/password');
 const controleEmail = require('../middleware/controleEmail');
 //la fonction router
 const router = express.Router();
-
 // importation du controller
 const userCtrl = require('../controllers/user');
 // les routes
 router.post('/signup',password,controleEmail, userCtrl.signup);
 router.post('/login', userCtrl.login);
-
 //exportation du module
 module.exports = router;
